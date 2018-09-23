@@ -22,13 +22,18 @@ class ProductListCell: UITableViewCell {
                                               blue: 72/225,
                                               alpha: 1)
         
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        inventoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        productImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(productImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(inventoryLabel)
+        
+        setUpConstraints()
+    }
+    
+    private func setUpConstraints() {
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        inventoryLabel.translatesAutoresizingMaskIntoConstraints = false
+        productImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             productImageView.widthAnchor.constraint(equalToConstant: 40),
@@ -40,7 +45,7 @@ class ProductListCell: UITableViewCell {
             
             nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                              constant: 16),
+                                               constant: 16),
             
             inventoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             inventoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,

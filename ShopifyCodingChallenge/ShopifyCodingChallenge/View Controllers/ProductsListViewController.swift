@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class ProductsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProductsListViewController: UIViewController  {
     
     private var products: [Product] = []
     
@@ -28,26 +28,35 @@ class ProductsListViewController: UIViewController, UITableViewDataSource, UITab
         
         self.navigationItem.title = NSLocalizedString("Products", comment: "Products list title")
         
+        setUpTableView()
+    }
+    
+    private func setUpTableView() {
         let tableView = UITableView(frame: .zero)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ProductListCell.self, forCellReuseIdentifier: "ProductListCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(red: 150/225,
-                                              green: 191/225,
-                                              blue: 72/225,
-                                              alpha: 1)
+        tableView.backgroundColor = UIColor(red: 150 / 225,
+                                            green: 191 / 225,
+                                            blue: 72 / 225,
+                                            alpha: 1)
         
         view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
+        
         tableView.reloadData()
     }
+}
+
+extension ProductsListViewController: UITableViewDataSource, UITableViewDelegate  {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -62,10 +71,10 @@ class ProductsListViewController: UIViewController, UITableViewDataSource, UITab
             return UITableViewCell()
         }
         let product = products[indexPath.row]
-        cell.inventoryLabel.text = String(product.availableInventory)
-        cell.nameLabel.text = product.name
+        cell.inventoryLabel.text = String(product.inventoryQuantity)
+        cell.nameLabel.text = product.title
         DispatchQueue.global().async {
-            let data = try? Data(contentsOf: product.imageURL)
+            let data = try? Data(contentsOf: product.image.imageURL)
             DispatchQueue.main.async {
                 if let data = data {
                     cell.productImageView.image = UIImage(data: data)
